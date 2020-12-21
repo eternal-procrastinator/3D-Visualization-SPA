@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>3d-visualization full-stack app</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div class="content">
+            <div class="params">
+                <h1>3D-визуализация куба</h1>
+                <div v-if="loading">
+                    <loader />
+                </div>
+
+                <div v-else>
+                    <form @submit.prevent="sendData">
+                        <div class="form__control">
+                            <label for="length">Длина = {{params.length}}</label>
+                            <input v-model="params.length" id="length" type="range" min="1" max="100" step="1">
+                        </div>
+                        <div class="form__control">
+                            <label for="width">Ширина = {{params.width}}</label>
+                            <input v-model="params.width" id="width" type="range" min="1" max="100" step="1">
+                        </div>
+                        <div class="form__control">
+                            <label for="height">Высота = {{params.height}}</label>
+                            <input v-model="params.height" id="height" type="range" min="1" max="100" step="1">
+                        </div>
+                        <button type="submit" class="form__submit">Смоделировать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://threejs.org/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./frontend.js"></script>
+</body>
+</html>
