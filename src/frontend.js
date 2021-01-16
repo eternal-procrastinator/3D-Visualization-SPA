@@ -32,7 +32,7 @@ new Vue({
             vertices: [],
             triangles: [],
             normals: [],
-            type: "cube",
+            type: null,
             loading: false,
             updated: false,
             smooth: false,
@@ -63,12 +63,13 @@ new Vue({
         async getData () {
             this.loading = true
             const data = await request( '/api/triangulation' )
-            this.cubeParams.length = data.cubeParams.length
-            this.cubeParams.width = data.cubeParams.width
-            this.cubeParams.height = data.cubeParams.height
-            this.coneParams.radius = data.coneParams.radius
-            this.coneParams.height = data.coneParams.height
-            this.coneParams.segments = data.coneParams.segments
+            this.cubeParams.length = data.Params.cubeParams.length
+            this.cubeParams.width = data.Params.cubeParams.width
+            this.cubeParams.height = data.Params.cubeParams.height
+            this.coneParams.radius = data.Params.coneParams.radius
+            this.coneParams.height = data.Params.coneParams.height
+            this.coneParams.segments = data.Params.coneParams.segments
+            this.type = data.Type
             this.loading = false
         },
         async sendData () {

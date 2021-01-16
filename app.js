@@ -16,26 +16,27 @@ let Params = {
         segments: '10',
     }
 }
+let Type = 'cube'
 
 app.use(express.json())
 
 app.get('/api/triangulation', (req, res) => {
-    console.log(Params)
-    res.status(200).json(Params)
+    res.status(200).json({ Params: Params, Type: Type })
 })
 
 app.post('/api/triangulation', (req, res) => {
     switch (req.body.Type) {
         case 'cube':
             Params.cubeParams = req.body.Params
+            Type = req.body.Type
             res.status(202).json(JSON.stringify(TriangulateCube(Params.cubeParams)))
             break
         case 'cone':
             Params.coneParams = req.body.Params
+            Type = req.body.Type
             res.status(202).json(JSON.stringify(TriangulateCone(Params.coneParams)))
             break
     }
-    console.log(Params)
 })
 
 app.use(express.static(path.resolve(__dirname, 'src')))
