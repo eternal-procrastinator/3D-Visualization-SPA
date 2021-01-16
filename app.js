@@ -6,20 +6,21 @@ const { TriangulateCube, TriangulateCone } = require('./additional/triangulation
 
 let Params = {
     cubeParams: {
-        cubeLength: '50',
-        cubeWidth: '50',
-        cubeHeight: '50',
+        length: '50',
+        width: '50',
+        height: '50',
     },
     coneParams: {
-        coneRadius: '50',
-        coneHeight: '50',
-        coneSegments: '10',
+        radius: '50',
+        height: '50',
+        segments: '10',
     }
 }
 
 app.use(express.json())
 
 app.get('/api/triangulation', (req, res) => {
+    console.log(Params)
     res.status(200).json(Params)
 })
 
@@ -34,6 +35,7 @@ app.post('/api/triangulation', (req, res) => {
             res.status(202).json(JSON.stringify(TriangulateCone(Params.coneParams)))
             break
     }
+    console.log(Params)
 })
 
 app.use(express.static(path.resolve(__dirname, 'src')))
