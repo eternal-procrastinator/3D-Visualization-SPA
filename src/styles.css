@@ -17,6 +17,7 @@ body {
 }
 
 .params {
+    width: 400px;
     position: absolute;
     right: 15px;
     top: 15px;
@@ -24,6 +25,11 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(255,255,255,0.7);
     padding: 30px;
+    min-width: 300px;
+}
+
+.figure-type {
+    margin-bottom: 15px;
 }
 
 form {
@@ -36,12 +42,21 @@ form {
     display: flex;
     justify-content: space-between;
     align-content: center;
+    margin: 5px 0;
+}
+
+.form__control--vertical {
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    margin: 15px 0 0;
 }
 
 .form__submit {
     margin-top: 20px;
     padding: 5px 15px;
     cursor: pointer;
+    color: black;
     background-color: white;
     border: none;
     border-radius: 4px;
@@ -65,4 +80,44 @@ label {
     font-size: 18px;
     line-height: 22px;
     letter-spacing: 1px;
+    margin: 0;
+}
+
+.label__radio {
+    cursor: pointer;
+    padding: 5px 20px;
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    transition: all 0.1s ease;
+    user-select: none;
+}
+
+.label__radio:hover {
+    background-color: #9e9e9e;
+}
+
+.label__radio.active {
+    background-color: rgba(100,181,246, 0.9); /*rgba(75,174,79, 0.8);*/
+}
+
+.label__radio--addit {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.input__radio {
+    display: none;
+}
+
+.rotation-speed {
+    margin-top: 20px;
+}
+
+.rotation-speed__text {
+    color: white;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 1px;
+    padding: 5px 0;
 }

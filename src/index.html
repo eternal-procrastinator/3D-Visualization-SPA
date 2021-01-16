@@ -12,28 +12,87 @@
     <div id="app" v-cloak>
         <div class="content">
             <div class="params">
-                <h1>3D-визуализация куба</h1>
+                <form class="figure-type">
+                    <div class="form__control">
+                        <label for="cubeType" class="label__radio" :class="{ 'active': type === 'cube' }">
+                            <input class="input__radio" type="radio" id="cubeType" value="cube" v-model="type">
+                            Куб
+                        </label>
+                        <label for="coneType" class="label__radio" :class="{ 'active': type === 'cone' }">
+                            <input class="input__radio" type="radio" id="coneType" value="cone" v-model="type">
+                            Конус
+                        </label>
+                    </div>
+                </form>
+
+                <h1 v-if="type === 'cube'">3D-визуализация куба</h1>
+                <h1 v-else>3D-визуализация конуса</h1>
+
                 <div v-if="loading">
                     <loader />
+                </div>
+
+                <div v-else-if="type === 'cube'">
+                    <form @submit.prevent="sendData">
+                        <div class="form__control">
+                            <label for="cubeLength">Длина = {{ cubeParams.length }}</label>
+                            <input v-model="cubeParams.length" id="cubeLength" type="range" min="1" max="100" step="1">
+                        </div>
+                        <div class="form__control">
+                            <label for="cubeWidth">Ширина = {{ cubeParams.width }}</label>
+                            <input v-model="cubeParams.width" id="cubeWidth" type="range" min="1" max="100" step="1">
+                        </div>
+                        <div class="form__control">
+                            <label for="cubeHeight">Высота = {{ cubeParams.height }}</label>
+                            <input v-model="cubeParams.height" id="cubeHeight" type="range" min="1" max="100" step="1">
+                        </div>
+                        <button type="submit" class="form__submit">Смоделировать</button>
+                    </form>
                 </div>
 
                 <div v-else>
                     <form @submit.prevent="sendData">
                         <div class="form__control">
-                            <label for="length">Длина = {{params.length}}</label>
-                            <input v-model="params.length" id="length" type="range" min="1" max="100" step="1">
+                            <label for="coneRadius">Радиус = {{ coneParams.radius }}</label>
+                            <input v-model="coneParams.radius" id="coneRadius" type="range" min="1" max="100" step="1">
                         </div>
                         <div class="form__control">
-                            <label for="width">Ширина = {{params.width}}</label>
-                            <input v-model="params.width" id="width" type="range" min="1" max="100" step="1">
+                            <label for="coneHeight">Высота = {{ coneParams.height }}</label>
+                            <input v-model="coneParams.height" id="coneHeight" type="range" min="1" max="100" step="1">
                         </div>
                         <div class="form__control">
-                            <label for="height">Высота = {{params.height}}</label>
-                            <input v-model="params.height" id="height" type="range" min="1" max="100" step="1">
+                            <label for="coneSegments">Сегменты = {{ coneParams.segments }}</label>
+                            <input v-model="coneParams.segments" id="coneSegments" type="range" min="3" max="100" step="1">
+                        </div>
+                        <div class="form__control form__control--vertical">
+                            <label for="discrete" class="label__radio label__radio--addit" :class="{ 'active': smooth === false }">
+                                <input class="input__radio" type="radio" id="discrete" :value="false" v-model="smooth">
+                                Дискретное отображение
+                            </label>
+                            <label for="smooth" class="label__radio label__radio--addit" :class="{ 'active': smooth === true }">
+                                <input class="input__radio" type="radio" id="smooth" :value="true" v-model="smooth">
+                                Гладкое отображение
+                            </label>
                         </div>
                         <button type="submit" class="form__submit">Смоделировать</button>
                     </form>
                 </div>
+
+                <form class="rotation-speed">
+                    <span class="rotation-speed__text">Вращение по оси:</span>
+                    <div class="form__control">
+                        <label for="rotation-x">x = {{ rotationSpeed.x }}</label>
+                        <input v-model="rotationSpeed.x" id="rotation-x" type="range" min="-0.01" max="0.01" step="0.0005">
+                    </div>
+                    <div class="form__control">
+                        <label for="rotation-y">y = {{ rotationSpeed.y }}</label>
+                        <input v-model="rotationSpeed.y" id="rotation-y" type="range" min="-0.01" max="0.01" step="0.0005">
+                    </div>
+                    <div class="form__control">
+                        <label for="rotation-z">z = {{ rotationSpeed.z }}</label>
+                        <input v-model="rotationSpeed.z" id="rotation-z" type="range" min="-0.01" max="0.01" step="0.0005">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

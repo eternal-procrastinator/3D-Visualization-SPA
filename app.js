@@ -2,12 +2,19 @@ const express = require('express')
 const path = require('path')
 const app = express()
 
-const { Triangulate } = require('./additional/triangulation')
+const { TriangulateCube, TriangulateCone } = require('./additional/triangulation')
 
 let Params = {
-    length: '50',
-    width: '50',
-    height: '50'
+    cubeParams: {
+        cubeLength: '50',
+        cubeWidth: '50',
+        cubeHeight: '50',
+    },
+    coneParams: {
+        coneRadius: '50',
+        coneHeight: '50',
+        coneSegments: '10',
+    }
 }
 
 app.use(express.json())
@@ -17,8 +24,16 @@ app.get('/api/triangulation', (req, res) => {
 })
 
 app.post('/api/triangulation', (req, res) => {
-    Params = req.body
-    res.status(202).json(JSON.stringify(Triangulate(Params)))
+    switch (req.body.Type) {
+        case 'cube':
+            Params.cubeParams = req.body.Params
+            res.status(202).json(JSON.stringify(TriangulateCube(Params.cubeParams)))
+            break
+        case 'cone':
+            Params.coneParams = req.body.Params
+            res.status(202).json(JSON.stringify(TriangulateCone(Params.coneParams)))
+            break
+    }
 })
 
 app.use(express.static(path.resolve(__dirname, 'src')))
